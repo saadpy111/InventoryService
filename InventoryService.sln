@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.Infrastructure", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.Persistence", "Inventory.Persistence\Inventory.Persistence.csproj", "{89915C27-E497-442B-88A6-080955C47D2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryService.Domain", "InventoryService.Domain\InventoryService.Domain.csproj", "{01EADB82-5616-4C48-B525-7FD704BC21C5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.Domain", "InventoryService.Domain\Inventory.Domain.csproj", "{01EADB82-5616-4C48-B525-7FD704BC21C5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.Application", "Inventory.Application\Inventory.Application.csproj", "{32015117-7E0F-44F8-AFB5-E21BFEE3D311}"
 EndProject
