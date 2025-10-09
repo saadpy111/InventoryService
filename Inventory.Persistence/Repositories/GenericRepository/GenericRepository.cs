@@ -34,7 +34,7 @@ namespace Inventory.Persistence.Repositories.GenericRepository
             foreach (var include in includes)
                 query = query.Include(include);
 
-            return await _dbSet.FindAsync(id);
+            return await query.FirstOrDefaultAsync(e => EF.Property<Guid>(e, "Id") == id);
         }
 
         public void Remove(T entity)
@@ -43,7 +43,7 @@ namespace Inventory.Persistence.Repositories.GenericRepository
         }
 
         public async Task<PagedResult<T>?> Search(
-            Expression<Func<T, bool>> filter,
+            Expression<Func<T, bool>>? filter,
             int pagenom,
             int pagesize,
             Func<IQueryable<T>, IOrderedQueryable<T>>? orderby = null,
@@ -80,6 +80,21 @@ namespace Inventory.Persistence.Repositories.GenericRepository
         public void Update(T entity)
         {
             _dbSet.Update(entity);
+        }
+
+        public async Task<List<T>> GetAll 
+               (Expression<Func<T, bool>>? filter, params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T>  query = _dbSet;
+
+            if (filter != null)
+                query = query.Where(filter);
+
+
+            foreach (var include in includes)
+                query = query.Include(include);
+
+            return await query.ToListAsync();
         }
     }
 
