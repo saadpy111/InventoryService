@@ -16,7 +16,7 @@ namespace Inventory.Persistence.Configurations
             builder.HasIndex(p => p.Sku)
                    .IsUnique();
 
-            builder.Property(p => p.Sku).HasMaxLength(50).IsRequired();
+            builder.Property(p => p.Sku).HasMaxLength(50);
             builder.Property(p => p.Name).HasMaxLength(255).IsRequired();
 
             builder.HasOne(p => p.Category)

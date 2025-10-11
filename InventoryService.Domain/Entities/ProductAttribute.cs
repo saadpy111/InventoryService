@@ -14,3 +14,4 @@ namespace Inventory.Domain.Entities
         public ICollection<ProductAttributeValue> Values { get; set; }
     }
 }
+

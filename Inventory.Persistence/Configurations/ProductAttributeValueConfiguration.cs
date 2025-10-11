@@ -13,8 +13,8 @@ namespace Inventory.Persistence.Configurations
 
             builder.Property(pav => pav.Value).HasMaxLength(500).IsRequired();
 
-            builder.HasIndex(pav => new { pav.ProductId, pav.AttributeId })
-                   .IsUnique();
+            builder.HasIndex(pav => new { pav.ProductId, pav.AttributeId });
+               
 
             builder.HasOne(pav => pav.Product)
                    .WithMany(p => p.AttributeValues)
