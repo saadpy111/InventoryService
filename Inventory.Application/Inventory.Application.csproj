@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Folder Include="Contracts\Infrastruture\" />
+    <Folder Include="Features\InventoryQuarantineFeatures\Commands\" />
     <Folder Include="Features\StockQuantFeatures\Commands\" />
   </ItemGroup>
 

@@ -6,6 +6,7 @@ using Inventory.Application.Features.LocationFeatures.Commands.UpdateLocation;
 using Inventory.Application.Features.LocationFeatures.Commands.DeleteLocation;
 using Inventory.Application.Features.LocationFeatures.Queries.GetLocationById;
 using Inventory.Application.Features.LocationFeatures.Queries.GetAllLocations;
+using Inventory.Application.Features.LocationFeatures.Queries.GetLocationsByWarehouseId;
 
 namespace Inventory.Api.Controllers
 {
@@ -33,6 +34,13 @@ namespace Inventory.Api.Controllers
             var response = await _mediator.Send(new GetLocationByIdQueryRequest { Id = id });
             if (response.Location == null) return NotFound();
             return Ok(response.Location);
+        }
+
+        [HttpGet("by-warehouse/{warehouseId}")]
+        public async Task<IActionResult> GetByWarehouseId(Guid warehouseId)
+        {
+            var response = await _mediator.Send(new GetLocationsByWarehouseIdQueryRequest { WarehouseId = warehouseId });
+            return Ok(response.Locations);
         }
 
         [HttpPost]

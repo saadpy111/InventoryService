@@ -8,8 +8,8 @@ namespace Inventory.Domain.Enums
 {
     public enum QuarantineStatus
     {
-        Pending = 0,    
-        Approved = 1,   
-        Rejected = 2    
+        Pending = 1, 
+        Approved  ,   
+        Rejected     
     }
 }

@@ -6,6 +6,7 @@ using Inventory.Application.Features.ProductBarcodeFeatures.Commands.UpdateProdu
 using Inventory.Application.Features.ProductBarcodeFeatures.Commands.DeleteProductBarcode;
 using Inventory.Application.Features.ProductBarcodeFeatures.Queries.GetProductBarcodeById;
 using Inventory.Application.Features.ProductBarcodeFeatures.Queries.GetAllProductBarcodes;
+using Inventory.Application.Features.ProductBarcodeFeatures.Queries.GetPagedProductBarcodes;
 
 namespace Inventory.Api.Controllers
 {
@@ -33,6 +34,18 @@ namespace Inventory.Api.Controllers
             var response = await _mediator.Send(new GetProductBarcodeByIdQueryRequest { Id = id });
             if (response.ProductBarcode == null) return NotFound();
             return Ok(response.ProductBarcode);
+        }
+
+        [HttpGet("paged")]
+        public async Task<IActionResult> GetPaged([FromQuery] string? search, [FromQuery] int page = 1, [FromQuery] int pageSize = 20)
+        {
+            var response = await _mediator.Send(new GetPagedProductBarcodesQueryRequest
+            {
+                Search = search,
+                Page = page,
+                PageSize = pageSize
+            });
+            return Ok(response.Result);
         }
 
         [HttpPost]

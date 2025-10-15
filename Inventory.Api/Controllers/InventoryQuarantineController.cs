@@ -1,10 +1,8 @@
 using Inventory.Application.Dtos.InventoryQuarantineDtos;
-using Inventory.Application.Features.InventoryQuarantineFeatures.Commands.CreateInventoryQuarantine;
-using Inventory.Application.Features.InventoryQuarantineFeatures.Commands.DeleteInventoryQuarantine;
-using Inventory.Application.Features.InventoryQuarantineFeatures.Commands.UpdateInventoryQuarantine;
-using Inventory.Application.Features.InventoryQuarantineFeatures.Commands.UpdateInventoryQuarantineStatus;
 using Inventory.Application.Features.InventoryQuarantineFeatures.Queries.GetAllInventoryQuarantines;
 using Inventory.Application.Features.InventoryQuarantineFeatures.Queries.GetInventoryQuarantineById;
+using Inventory.Application.Features.InventoryQuarantineFeatures.Queries.GetPagedInventoryQuarantines;
+using Inventory.Application.Features.ProductFeatures.Queries.GetPagedProducts;
 using Inventory.Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -42,45 +40,18 @@ namespace Inventory.Api.Controllers
             return Ok(response.InventoryQuarantine);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateInventoryQuarantineDto dto)
+        [HttpGet("paged")]
+        public async Task<IActionResult> GetPaged([FromQuery] string? search, [FromQuery] int page = 1, [FromQuery] int pageSize = 20)
         {
-            var response = await _mediator.Send(new CreateInventoryQuarantineCommandRequest { InventoryQuarantine = dto });
-            if (!response.Success) return BadRequest();
-            return Ok(response.InventoryQuarantine);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateInventoryQuarantineDto dto)
-        {
-            if (id != dto.Id) return BadRequest();
-            var response = await _mediator.Send(new UpdateInventoryQuarantineCommandRequest { InventoryQuarantine = dto });
-            if (!response.Success) return NotFound();
-            return Ok(response.InventoryQuarantine);
-        }
-
-
-  
-        [HttpPut("{id}/status")]
-        public async Task<IActionResult> UpdateStatus(Guid InventoryQuarantineId, QuarantineStatus NewStatus)
-        {
-          
-            var response = await _mediator.Send(new UpdateInventoryQuarantineStatusCommandRequest
+            var response = await _mediator.Send(new GetPagedInventoryQuarantinesQueryRequest
             {
-                InventoryQuarantineId = InventoryQuarantineId,
-                NewStatus = NewStatus
+                Search = search,
+                Page = page,
+                PageSize = pageSize
             });
-            if (!response.Success) return NotFound();
-            return Ok(response.InventoryQuarantine);
+            return Ok(response.Result);
         }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            var response = await _mediator.Send(new DeleteInventoryQuarantineCommandRequest { Id = id });
-            if (!response.Success) return NotFound();
-            return NoContent();
-        }
+            
     }
 
 }

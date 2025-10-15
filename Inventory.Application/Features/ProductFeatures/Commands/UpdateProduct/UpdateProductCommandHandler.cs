@@ -31,7 +31,10 @@ namespace Inventory.Application.Features.ProductFeatures.Commands.UpdateProduct
                 {
                     await _unitOfWork.Repositories<ProductCostHistory>().Add(new ProductCostHistory()
                     {
-                         
+                              NewCost = request.Product.CostPrice,
+                              OldCost = product.CostPrice,
+                              CreatedAt = DateTime.UtcNow,
+                              ProductId = product.Id,      
                     });
                 }
                 var attributValues = new List<ProductAttributeValue>();

@@ -1,12 +1,13 @@
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Inventory.Application.Dtos.ProductDtos;
-using Inventory.Application.Features.ProductFeatures.Commands.CreateProduct;
 using Inventory.Application.Features.ProductFeatures.Commands.AddProductAttributeValues;
-using Inventory.Application.Features.ProductFeatures.Queries.GetProductById;
+using Inventory.Application.Features.ProductFeatures.Commands.CreateProduct;
 using Inventory.Application.Features.ProductFeatures.Commands.DeleteProduct;
 using Inventory.Application.Features.ProductFeatures.Commands.MakeProductInactive;
 using Inventory.Application.Features.ProductFeatures.Commands.UpdateProduct;
+using Inventory.Application.Features.ProductFeatures.Queries.GetPagedProducts;
+using Inventory.Application.Features.ProductFeatures.Queries.GetProductById;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Inventory.Api.Controllers
 {
@@ -65,6 +66,19 @@ namespace Inventory.Api.Controllers
             return NoContent(); 
         }
 
+
+        [HttpGet("paged")]
+        public async Task<IActionResult> GetPaged([FromQuery] string? search, [FromQuery] int page = 1, [FromQuery] int pageSize = 20)
+        {
+            var response = await _mediator.Send(new GetPagedProductsQueryRequest
+            {
+                Search = search,
+                Page = page,
+                PageSize = pageSize
+            });
+            return Ok(response.Result);
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] UpdateProductDto dto)
         {
@@ -73,5 +87,5 @@ namespace Inventory.Api.Controllers
             if (!response.Success) return NotFound();
             return Ok(response.Product);
         }
-    }
+    }   
 }

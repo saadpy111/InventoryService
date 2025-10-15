@@ -4,6 +4,7 @@ using Inventory.Application.Dtos.StockQuantDtos;
 
 using Inventory.Application.Features.StockQuantFeatures.Queries.GetStockQuantById;
 using Inventory.Application.Features.StockQuantFeatures.Queries.GetAllStockQuants;
+using Inventory.Application.Features.StockQuantFeatures.Queries.GetPagedStockQuants;
 
 namespace Inventory.Api.Controllers
 {
@@ -33,6 +34,16 @@ namespace Inventory.Api.Controllers
             return Ok(response.StockQuant);
         }
 
-
+        [HttpGet("paged")]
+        public async Task<IActionResult> GetPaged([FromQuery] string? search, [FromQuery] int page = 1, [FromQuery] int pageSize = 20)
+        {
+            var response = await _mediator.Send(new GetPagedStockQuantsQueryRequest
+            {
+                Search = search,
+                Page = page,
+                PageSize = pageSize
+            });
+            return Ok(response.Result);
+        }
     }
 }

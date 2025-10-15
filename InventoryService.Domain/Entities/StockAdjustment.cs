@@ -11,7 +11,7 @@ namespace Inventory.Domain.Entities
         public int ExpectedQuantity { get; set; }
         public int ActualQuantity { get; set; }
         public DateTime Date { get; set; }
-        public Guid UserId { get; set; } // Reference to Identity Service User ID
+        public Guid UserId { get; set; } 
 
         public Guid WarehouseId { get; set; }
         public Warehouse Warehouse { get; set; }
