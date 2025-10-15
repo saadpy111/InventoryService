@@ -403,7 +403,7 @@ namespace Inventory.Persistence.Migrations
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("DestinationLocationId")
+                    b.Property<Guid?>("DestinationLocationId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("MoveDate")
@@ -425,7 +425,7 @@ namespace Inventory.Persistence.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<Guid>("SourceLocationId")
+                    b.Property<Guid?>("SourceLocationId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -650,8 +650,7 @@ namespace Inventory.Persistence.Migrations
                     b.HasOne("Inventory.Domain.Entities.Location", "DestinationLocation")
                         .WithMany()
                         .HasForeignKey("DestinationLocationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Inventory.Domain.Entities.Product", "Product")
                         .WithMany("StockMoves")
@@ -662,8 +661,7 @@ namespace Inventory.Persistence.Migrations
                     b.HasOne("Inventory.Domain.Entities.Location", "SourceLocation")
                         .WithMany()
                         .HasForeignKey("SourceLocationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("DestinationLocation");
 

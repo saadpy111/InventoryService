@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Inventory.Application.Helpers.Strategies.StockMoveFactoryHandler.Factory;
+using Inventory.Application.Helpers.Strategies.StockMoveFactoryHandler.Handlers;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -18,6 +20,16 @@ namespace Inventory.Application.DependencyInjection
             {
                 options.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly());
             });
+
+            #region StockQuantHandler
+              services.AddScoped<PurchaseStockMoveHandler>();
+              services.AddScoped<TransferStockMoveHandler>();
+              services.AddScoped<AdjustmentStockMoveHandler>();
+              services.AddScoped<ReturnStockMoveHandler>();
+              services.AddScoped<UnderReviewStockMoveHandler>();
+              services.AddScoped<SalesStockMoveHandler>();
+              services.AddScoped<IStockMoveHandlerFactory, StockMoveHandlerFactory>();
+            #endregion
 
             return services;
         }

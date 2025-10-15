@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Inventory.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,16 +11,16 @@ namespace Inventory.Domain.Entities
     {
         public int Quantity { get; set; }
         public DateTime MoveDate { get; set; }
-        public string Reference { get; set; } // رقم PO/SO/Transfer
-        public string MoveType { get; set; } // In, Out, Internal Transfer
+        public string? Reference { get; set; } 
+        public StockMoveType MoveType { get; set; } 
 
         public Guid ProductId { get; set; }
         public Product Product { get; set; }
 
-        public Guid SourceLocationId { get; set; }
+        public Guid? SourceLocationId { get; set; }
         public Location SourceLocation { get; set; }
 
-        public Guid DestinationLocationId { get; set; }
+        public Guid? DestinationLocationId { get; set; }
         public Location DestinationLocation { get; set; }
     }
 }

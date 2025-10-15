@@ -11,8 +11,19 @@ namespace Inventory.Persistence.Configurations
             builder.ToTable("StockMoves");
             builder.HasKey(sm => sm.Id);
 
-            builder.Property(sm => sm.MoveType).HasMaxLength(50).IsRequired();
-            builder.Property(sm => sm.Reference).HasMaxLength(100);
+            builder.Property(sm => sm.MoveType)
+                   .IsRequired()
+                   .HasConversion<string>()   
+                   .HasMaxLength(50);
+
+            builder.Property(sm => sm.Reference)
+                   .HasMaxLength(100);
+
+            builder.Property(sm => sm.Quantity)
+                   .IsRequired();
+
+            builder.Property(sm => sm.MoveDate)
+                   .IsRequired();
 
             builder.HasOne(sm => sm.Product)
                    .WithMany(p => p.StockMoves)

@@ -10,5 +10,9 @@ namespace Inventory.Application.Contracts.Persistence.Repositories
     {
         IGenericRepository<T> Repositories<T>() where T:class;
         Task<int> CompleteAsync();
+
+        Task BeginTransactionAsync();
+        Task CommitTransactionAsync();
+        Task RollbackTransactionAsync();
     }
 }

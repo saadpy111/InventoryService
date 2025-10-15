@@ -17,6 +17,10 @@ namespace Inventory.Application.Contracts.Persistence.Repositories
         #endregion
 
         #region Queries
+      
+
+        public Task<bool> Any(Expression<Func<T, bool>>? filter = null );
+        public Task<T?> GetFirst(Expression<Func<T, bool>> filter ,   bool asNoTracking = false, params Expression<Func<T, object>>[] includes);
         public Task<T?> GetById(Guid id , params Expression<Func<T,object>>[] includes);
         public Task<PagedResult<T>?> Search
                    (  Expression<Func<T,bool>>? filter ,

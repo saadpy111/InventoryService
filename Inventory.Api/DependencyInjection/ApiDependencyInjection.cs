@@ -30,7 +30,12 @@ namespace Inventory.Api.DependencyInjection
             });
             #endregion
             #region Swagger
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(options =>
+             {
+                options.UseInlineDefinitionsForEnums();
+                options.SchemaGeneratorOptions.SchemaIdSelector = type => type.FullName;
+             });
+
             #endregion
 
             return services;

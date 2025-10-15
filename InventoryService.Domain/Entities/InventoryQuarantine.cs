@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Inventory.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace Inventory.Domain.Entities
     {
         public int Quantity { get; set; }
         public DateTime QuarantineDate { get; set; }
-        public string Status { get; set; } 
+        public QuarantineStatus Status { get; set; } 
         public string SourceReference { get; set; } 
 
         public Guid ProductId { get; set; }

@@ -27,6 +27,8 @@ namespace Inventory.Persistence.Repositories.GenericRepository
             await _dbSet.AddAsync(entity);
         }
 
+
+
         public async Task<T?> GetById(Guid id, params Expression<Func<T, object>>[] includes)
         {
             IQueryable<T> query = _dbSet;
@@ -96,6 +98,28 @@ namespace Inventory.Persistence.Repositories.GenericRepository
 
             return await query.ToListAsync();
         }
+
+        public async Task<bool> Any(Expression<Func<T, bool>>? filter = null )
+        {
+            return filter == null ? await  _dbSet.AnyAsync() : await _dbSet.AnyAsync(filter) ;
+        }
+
+        public async Task<T?> GetFirst(
+        Expression<Func<T, bool>> filter,
+        bool asNoTracking = false,
+        params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = _dbSet;
+
+            if (asNoTracking)
+                query = query.AsNoTracking();
+
+            foreach (var include in includes)
+                query = query.Include(include);
+
+            return await query.FirstOrDefaultAsync(filter);
+        }
+
     }
 
 }

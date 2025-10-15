@@ -11,8 +11,10 @@ namespace Inventory.Persistence.Configurations
             builder.ToTable("InventoryQuarantines");
             builder.HasKey(iq => iq.Id);
 
-            builder.Property(iq => iq.Status).HasMaxLength(50).IsRequired();
-            builder.Property(iq => iq.SourceReference).HasMaxLength(100);
+            builder.Property(iq => iq.Status)
+                   .HasConversion<string>() 
+                   .HasMaxLength(50)
+                   .IsRequired(); builder.Property(iq => iq.SourceReference).HasMaxLength(100);
 
             builder.HasOne(iq => iq.Product)
                    .WithMany()

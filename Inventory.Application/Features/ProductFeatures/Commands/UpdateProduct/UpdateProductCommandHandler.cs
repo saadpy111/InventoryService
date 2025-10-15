@@ -27,6 +27,13 @@ namespace Inventory.Application.Features.ProductFeatures.Commands.UpdateProduct
                 product.Name = request.Product.Name;
                 product.Description = request.Product.Description;
                 product.UpdatedAt = DateTime.UtcNow;
+                if( product.SalePrice != request.Product.SalePrice)
+                {
+                    await _unitOfWork.Repositories<ProductCostHistory>().Add(new ProductCostHistory()
+                    {
+                         
+                    });
+                }
                 var attributValues = new List<ProductAttributeValue>();
                 attributValues = request.Product.AttributeValues.Select(p => new ProductAttributeValue()
                 {
